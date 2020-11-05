@@ -1,20 +1,28 @@
 package com.example.news.SQL;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.news.FeedsList;
 import com.example.news.R;
+import com.example.news.RSS.RSSFeedActivity;
 
 import java.util.List;
 
 public class    MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+
+    private static final String TAG = "TEST getLink";
 
     private final List<Link> linkList;
     private Activity context;
@@ -35,7 +43,7 @@ public class    MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         Link link = linkList.get(position);
         database = LinksDatabase.getInstance(context);
@@ -53,6 +61,20 @@ public class    MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>
 
             }
         });
+
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String linkText = (String) holder.linkView.getText();
+                Log.d(TAG, linkText);
+
+                Context context = view.getContext();
+                Intent intent = new Intent(view.getContext(), RSSFeedActivity.class);
+                intent.putExtra("url", linkText);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -64,6 +86,7 @@ public class    MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>
 
         TextView linkView;
         ImageView btnDelete;
+        LinearLayout row;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -71,6 +94,7 @@ public class    MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>
 
             linkView = itemView.findViewById(R.id.link_view);
             btnDelete = itemView.findViewById(R.id.btn_delete);
+            row = itemView.findViewById(R.id.row_id);
         }
     }
 }
