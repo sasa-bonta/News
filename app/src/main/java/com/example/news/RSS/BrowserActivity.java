@@ -17,6 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.news.R;
 
+/**
+ * @author Someone's Github repositori
+ * @version : 1.0
+ */
+
+/**
+ *  Initialises browser activity in web view based on URL
+ * @see WebView
+ */
 public class BrowserActivity extends AppCompatActivity {
 
 

@@ -24,6 +24,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * @author Unknown githuber
+ * @version : 1.0
+ */
+
+/**
+ * Works with xml flow
+ */
 public class RSSFeedActivity extends ListActivity {
 
     private static final String TAG = "TEST getLink";
@@ -83,20 +91,31 @@ public class RSSFeedActivity extends ListActivity {
 
         @Override
         protected String doInBackground(String... args) {
-            // rss link url
+            /**
+             * rss link url
+              */
+
             String rss_url = args[0];
 
-            // list of rss items
+            /**
+             * list of rss items
+             */
             rssItems = rssParser.getRSSFeedItems(rss_url);
 
-            // looping through each item
+            /**
+             * looping through each item
+             */
             for (RSSItem item : rssItems) {
-                // creating new HashMap
+                /**
+                 * creating new HashMap
+                 */
                 if (item.link.toString().equals(""))
                     break;
                 HashMap<String, String> map = new HashMap<String, String>();
 
-                // adding each child node to HashMap key => value
+                /**
+                 * adding each child node to HashMap key => value
+                 */
 
                 String givenDateString = item.pubdate.trim();
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
@@ -115,11 +134,15 @@ public class RSSFeedActivity extends ListActivity {
                 map.put(TAG_LINK, item.link);
                 map.put(TAG_PUB_DATE, item.pubdate); // If you want parse the date
 
-                // adding HashList to ArrayList
+                /**
+                 * adding HashList to ArrayList
+                 */
                 rssItemList.add(map);
             }
 
-            // updating UI from Background Thread
+            /**
+             * updating UI from Background Thread
+             */
             runOnUiThread(new Runnable() {
                 public void run() {
                     ListAdapter adapter = new SimpleAdapter(
@@ -128,7 +151,9 @@ public class RSSFeedActivity extends ListActivity {
                             new String[]{TAG_LINK, TAG_TITLE, TAG_PUB_DATE},
                             new int[]{R.id.page_url, R.id.title, R.id.pub_date});
 
-                    // updating listview
+                    /**
+                     * updating listview
+                     */
                     setListAdapter(adapter);
                 }
             });
